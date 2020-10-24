@@ -379,18 +379,18 @@ public class MucManager : StreamInteractionModule, Object {
             }
         });
 
-        bookmarks_provider[account] = stream_interactor.module_manager.get_module(account, Xep.Bookmarks.Module.IDENTITY);
+        bookmarks_provider[account] = stream_interactor.module_manager.get_module(account, Xep.Bookmarks2.Module.IDENTITY);
 
         bookmarks_provider[account].received_conferences.connect( (stream, conferences) => {
             sync_autojoin_active(account, conferences);
             bookmarks_updated(account, conferences);
         });
         bookmarks_provider[account].conference_added.connect( (stream, conference) => {
-            // TODO join (for Bookmarks2)
+            join.begin(account, conference.jid, conference.nick, conference.password);
             conference_added(account, conference);
         });
         bookmarks_provider[account].conference_removed.connect( (stream, jid) => {
-            // TODO part (for Bookmarks2)
+            part(account, jid);
             conference_removed(account, jid);
         });
     }
