@@ -42,6 +42,15 @@ public class Module : BookmarksProvider, XmppStreamModule {
         if (conference.nick != null) {
             conference_node.put_node((new StanzaNode.build("nick", NS_URI)).put_node(new StanzaNode.text(conference.nick)));
         }
+        Flag? flag = stream.get_flag(Flag.IDENTITY);
+        if (flag != null) {
+            if (flag.extension_elements.has_key(conference.jid)) {
+                StanzaNode? extensions = flag.extension_elements[conference.jid];
+                if (extensions != null) {
+                    conference_node.put_node(extensions);
+                }
+            }
+        }
         yield stream.get_module(Pubsub.Module.IDENTITY).publish(stream, stream.get_flag(Bind.Flag.IDENTITY).my_jid.bare_jid, NS_URI, conference.jid.to_string(), conference_node, Xmpp.Xep.Pubsub.ACCESS_MODEL_WHITELIST);
     }
 
@@ -61,6 +70,7 @@ public class Module : BookmarksProvider, XmppStreamModule {
         Flag? flag = stream.get_flag(Flag.IDENTITY);
         if (flag != null) {
             flag.conferences[conference.jid] = conference;
+            flag.extension_elements[conference.jid] = node.get_subnode("extensions", null, false);
         }
         conference_added(stream, conference);
     }
@@ -71,6 +81,7 @@ public class Module : BookmarksProvider, XmppStreamModule {
             Flag? flag = stream.get_flag(Flag.IDENTITY);
             if (flag != null) {
                 flag.conferences.unset(jid_parsed);
+                flag.extension_elements.unset(jid_parsed);
             }
             conference_removed(stream, jid_parsed);
         } catch (InvalidJidError e) {
@@ -117,6 +128,7 @@ public class Flag : XmppStreamFlag {
     }
 
     public HashMap<Jid, Conference> conferences = new HashMap<Jid, Conference>(Jid.hash_func, Jid.equals_func);
+    public HashMap<Jid, StanzaNode?> extension_elements = new HashMap<Jid, StanzaNode?>(Jid.hash_func, Jid.equals_func);
 
     public override string get_ns() { return NS_URI; }
     public override string get_id() { return IDENTITY.id; }
