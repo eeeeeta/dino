@@ -7,7 +7,7 @@ using Dino.Entities;
 namespace Dino {
 
 public class Database : Qlite.Database {
-    private const int VERSION = 16;
+    private const int VERSION = 17;
 
     public class AccountTable : Table {
         public Column<int> id = new Column.Integer("id") { primary_key = true, auto_increment = true };
@@ -62,7 +62,7 @@ public class Database : Qlite.Database {
         internal ContentItemTable(Database db) {
             base(db, "content_item");
             init({id, conversation_id, time, local_time, content_type, foreign_id, hide});
-            index("contentitem_localtime_counterpart_idx", {local_time, conversation_id});
+            index("contentitem_conversation_hide_localtime_time_idx", {conversation_id, hide, local_time, time});
             unique({content_type, foreign_id}, "IGNORE");
         }
     }
@@ -293,9 +293,13 @@ public class Database : Qlite.Database {
         mam_catchup = new MamCatchupTable(this);
         settings = new SettingsTable(this);
         init({ account, jid, entity, content_item, message, message_correction, real_jid, file_transfer, conversation, avatar, entity_identity, entity_feature, roster, mam_catchup, settings });
-        exec("PRAGMA journal_mode = WAL");
-        exec("PRAGMA synchronous = NORMAL");
-        exec("PRAGMA secure_delete = ON");
+        try {
+            exec("PRAGMA journal_mode = WAL");
+            exec("PRAGMA synchronous = NORMAL");
+            exec("PRAGMA secure_delete = ON");
+        } catch (Error e) {
+            error("Failed to set database properties: %s", e.message);
+        }
     }
 
     public override void migrate(long oldVersion) {
@@ -383,6 +387,14 @@ public class Database : Qlite.Database {
                 avatar.create_table_at_version(VERSION);
             } catch (Error e) {
                 error("Failed to upgrade to database version 16: %s", e.message);
+            }
+        }
+        if (oldVersion < 17) {
+            try {
+                exec("DROP INDEX contentitem_localtime_counterpart_idx");
+                exec("CREATE INDEX contentitem_conversation_hide_localtime_time_idx ON content_item (conversation_id, hide, local_time, time)");
+            } catch (Error e) {
+                error("Failed to upgrade to database version 17: %s", e.message);
             }
         }
     }

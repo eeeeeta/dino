@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dino-0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-10 20:10+0200\n"
-"PO-Revision-Date: 2020-08-03 06:41+0000\n"
+"POT-Creation-Date: 2020-11-12 18:24+0100\n"
+"PO-Revision-Date: 2020-10-10 10:49+0000\n"
 "Language-Team: German <https://hosted.weblate.org/projects/dino/translations/"
 "de/>\n"
 "Language: de\n"
@@ -11,66 +11,80 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
-#: main/src/ui/notifications.vala:67
+#: main/src/ui/file_send_overlay.vala:85
+msgid "The file exceeds the server's maximum upload size."
+msgstr "Die Datei übersteigt die maximale Uploadgröße des Servers."
+
+#: main/src/ui/notifications.vala:66
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:196
 msgid "Image sent"
 msgstr "Bild gesendet"
 
-#: main/src/ui/notifications.vala:67
+#: main/src/ui/notifications.vala:66
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:196
 msgid "File sent"
 msgstr "Datei gesendet"
 
-#: main/src/ui/notifications.vala:69
+#: main/src/ui/notifications.vala:68
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:198
 msgid "Image received"
 msgstr "Bild empfangen"
 
-#: main/src/ui/notifications.vala:69
+#: main/src/ui/notifications.vala:68
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:198
 msgid "File received"
 msgstr "Datei empfangen"
 
-#: main/src/ui/notifications.vala:99
+#: main/src/ui/notifications.vala:98
 msgid "Subscription request"
 msgstr "Kontaktanfrage"
 
-#: main/src/ui/notifications.vala:106 main/src/ui/notifications.vala:141
+#: main/src/ui/notifications.vala:105 main/src/ui/notifications.vala:140
 #: main/src/ui/notifications.vala:162
 #: main/src/ui/conversation_content_view/subscription_notification.vala:37
 msgid "Accept"
 msgstr "Annehmen"
 
-#: main/src/ui/notifications.vala:107 main/src/ui/notifications.vala:140
+#: main/src/ui/notifications.vala:106 main/src/ui/notifications.vala:139
 #: main/src/ui/notifications.vala:161
 #: main/src/ui/conversation_content_view/subscription_notification.vala:38
 msgid "Deny"
 msgstr "Ablehnen"
 
-#: main/src/ui/notifications.vala:113
+#: main/src/ui/notifications.vala:112
 #: main/src/ui/add_conversation/conference_details_fragment.vala:189
 #: main/src/ui/manage_accounts/add_account_dialog.vala:258
 #, c-format
 msgid "Could not connect to %s"
 msgstr "Verbindung zu %s konnte nicht hergestellt werden"
 
-#: main/src/ui/notifications.vala:129
+#: main/src/ui/notifications.vala:115
+#: main/src/ui/manage_accounts/dialog.vala:232
+msgid "Wrong password"
+msgstr "Passwort falsch"
+
+#: main/src/ui/notifications.vala:118
+#: main/src/ui/manage_accounts/dialog.vala:234
+msgid "Invalid TLS certificate"
+msgstr "Ungültiges TLS-Zertifikat"
+
+#: main/src/ui/notifications.vala:128
 #, c-format
 msgid "Invitation to %s"
 msgstr "Einladung zu %s"
 
-#: main/src/ui/notifications.vala:130
+#: main/src/ui/notifications.vala:129
 #, c-format
 msgid "%s invited you to %s"
 msgstr "%s hat dich in %s eingeladen"
 
-#: main/src/ui/notifications.vala:151
+#: main/src/ui/notifications.vala:150
 msgid "Permission request"
 msgstr "Berechtigungsanfrage"
 
-#: main/src/ui/notifications.vala:152
+#: main/src/ui/notifications.vala:151
 #, c-format
 msgid "%s requests the permission to write in %s"
 msgstr "%s erbittet die Berechtigung zum Schreiben in %s"
@@ -158,20 +172,20 @@ msgstr "Schreibberechtigung erteilen"
 msgid "Revoke write permission"
 msgstr "Schreibberechtigung entziehen"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 msgid "Select file"
 msgstr "Datei auswählen"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 #: main/src/ui/manage_accounts/dialog.vala:152
 msgid "Select"
 msgstr "Auswählen"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 #: main/src/ui/add_conversation/select_contact_dialog.vala:38
 #: main/src/ui/add_conversation/add_conference_dialog.vala:15
 #: main/src/ui/add_conversation/add_conference_dialog.vala:122
-#: main/src/ui/application.vala:200 main/src/ui/manage_accounts/dialog.vala:152
+#: main/src/ui/application.vala:203 main/src/ui/manage_accounts/dialog.vala:152
 #: main/data/message_item_widget_edit_mode.ui:54
 #: main/data/add_conversation/add_groupchat_dialog.ui:11
 #: main/data/add_conversation/add_contact_dialog.ui:12
@@ -211,7 +225,7 @@ msgid "Start"
 msgstr "Starten"
 
 #: main/src/ui/add_conversation/add_conference_dialog.vala:26
-#: main/src/ui/application.vala:200 main/data/menu_add.ui:13
+#: main/src/ui/application.vala:203 main/data/menu_add.ui:13
 #: main/data/shortcuts.ui:24
 msgid "Join Channel"
 msgstr "Kanal beitreten"
@@ -227,7 +241,7 @@ msgstr "Weiter"
 #: main/src/ui/add_conversation/add_conference_dialog.vala:66
 #: main/src/ui/add_conversation/add_conference_dialog.vala:142
 #: main/src/ui/add_conversation/conference_details_fragment.vala:157
-#: main/src/ui/application.vala:200
+#: main/src/ui/application.vala:203
 msgid "Join"
 msgstr "Beitreten"
 
@@ -282,19 +296,19 @@ msgstr "Ungültige Adresse"
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: main/src/ui/global_search.vala:140
+#: main/src/ui/global_search.vala:141
 #, c-format
 msgid "%i search result"
 msgid_plural "%i search results"
 msgstr[0] "%i Suchergebnis"
 msgstr[1] "%i Suchergebnisse"
 
-#: main/src/ui/global_search.vala:167
+#: main/src/ui/global_search.vala:168
 #, c-format
 msgid "In %s"
 msgstr "In %s"
 
-#: main/src/ui/global_search.vala:167
+#: main/src/ui/global_search.vala:168
 #, c-format
 msgid "With %s"
 msgstr "Mit %s"
@@ -501,14 +515,6 @@ msgstr "Verbunden"
 msgid "Disconnected"
 msgstr "Nicht verbunden"
 
-#: main/src/ui/manage_accounts/dialog.vala:232
-msgid "Wrong password"
-msgstr "Passwort falsch"
-
-#: main/src/ui/manage_accounts/dialog.vala:234
-msgid "Invalid TLS certificate"
-msgstr "Ungültiges TLS-Zertifikat"
-
 #: main/src/ui/manage_accounts/dialog.vala:237
 #: main/src/ui/manage_accounts/dialog.vala:239
 msgid "Error"
@@ -527,6 +533,28 @@ msgstr "Bei %s einloggen"
 #, c-format
 msgid "You can now use the account %s."
 msgstr "Du kannst das Konto %s jetzt benutzen."
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:245
+#, c-format
+msgid "The server could not prove that it is %s."
+msgstr "Der Server konnte nicht beweisen, dass er %s ist."
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:247
+msgid "Its security certificate is not trusted by your operating system."
+msgstr ""
+"Sein Sicherheitszertifikat wird von deinem Betriebssystem nicht akzeptiert."
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:249
+msgid "Its security certificate is issued to another domain."
+msgstr "Sein Sicherheitszertifikat ist für eine andere Domain ausgestellt."
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:251
+msgid "Its security certificate will only become valid in the future."
+msgstr "Sein Sicherheitszertifikat ist erst in der Zukunft gültig."
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:253
+msgid "Its security certificate is expired."
+msgstr "Sein Sicherheitszertifikat ist abgelaufen."
 
 #: main/src/ui/manage_accounts/add_account_dialog.vala:278
 msgid "Wrong username or password"
@@ -562,11 +590,11 @@ msgstr "Registrieren"
 msgid "Check %s for information on how to sign up"
 msgstr "Eventuell sind auf %s Informationen zur Registrierung zu finden"
 
-#: main/src/ui/conversation_content_view/message_widget.vala:157
+#: main/src/ui/conversation_content_view/message_widget.vala:158
 msgid "Message too long"
 msgstr "Nachricht zu lang"
 
-#: main/src/ui/conversation_content_view/message_widget.vala:185
+#: main/src/ui/conversation_content_view/message_widget.vala:186
 msgid "edited"
 msgstr "bearbeitet"
 

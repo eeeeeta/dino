@@ -7,74 +7,89 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-10 20:10+0200\n"
-"PO-Revision-Date: 2020-06-22 10:41+0000\n"
+"POT-Creation-Date: 2020-11-12 18:24+0100\n"
+"PO-Revision-Date: 2020-10-10 10:49+0000\n"
 "Language-Team: none\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
-#: main/src/ui/notifications.vala:67
+#: main/src/ui/file_send_overlay.vala:85
+msgid "The file exceeds the server's maximum upload size."
+msgstr ""
+"Lo fichièr es mai pesuc que la talha maximala de mandadís sul servidor."
+
+#: main/src/ui/notifications.vala:66
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:196
 msgid "Image sent"
 msgstr "Imatge enviat"
 
-#: main/src/ui/notifications.vala:67
+#: main/src/ui/notifications.vala:66
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:196
 msgid "File sent"
 msgstr "Fichièr enviat"
 
-#: main/src/ui/notifications.vala:69
+#: main/src/ui/notifications.vala:68
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:198
 msgid "Image received"
 msgstr "Imatge recebuda"
 
-#: main/src/ui/notifications.vala:69
+#: main/src/ui/notifications.vala:68
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:198
 msgid "File received"
 msgstr "Fichièr recebut"
 
-#: main/src/ui/notifications.vala:99
+#: main/src/ui/notifications.vala:98
 msgid "Subscription request"
 msgstr "Demanda d’abonament"
 
-#: main/src/ui/notifications.vala:106 main/src/ui/notifications.vala:141
+#: main/src/ui/notifications.vala:105 main/src/ui/notifications.vala:140
 #: main/src/ui/notifications.vala:162
 #: main/src/ui/conversation_content_view/subscription_notification.vala:37
 msgid "Accept"
 msgstr "Acceptar"
 
-#: main/src/ui/notifications.vala:107 main/src/ui/notifications.vala:140
+#: main/src/ui/notifications.vala:106 main/src/ui/notifications.vala:139
 #: main/src/ui/notifications.vala:161
 #: main/src/ui/conversation_content_view/subscription_notification.vala:38
 msgid "Deny"
 msgstr "Regetar"
 
-#: main/src/ui/notifications.vala:113
+#: main/src/ui/notifications.vala:112
 #: main/src/ui/add_conversation/conference_details_fragment.vala:189
 #: main/src/ui/manage_accounts/add_account_dialog.vala:258
 #, c-format
 msgid "Could not connect to %s"
 msgstr "Connexion impossibla a %s"
 
-#: main/src/ui/notifications.vala:129
+#: main/src/ui/notifications.vala:115
+#: main/src/ui/manage_accounts/dialog.vala:232
+msgid "Wrong password"
+msgstr "Marrit senhal"
+
+#: main/src/ui/notifications.vala:118
+#: main/src/ui/manage_accounts/dialog.vala:234
+msgid "Invalid TLS certificate"
+msgstr "Lo certificat TLS es invalid"
+
+#: main/src/ui/notifications.vala:128
 #, c-format
 msgid "Invitation to %s"
 msgstr "Convit a %s"
 
-#: main/src/ui/notifications.vala:130
+#: main/src/ui/notifications.vala:129
 #, c-format
 msgid "%s invited you to %s"
 msgstr "%s vos convidèt a %s"
 
-#: main/src/ui/notifications.vala:151
+#: main/src/ui/notifications.vala:150
 msgid "Permission request"
 msgstr "Demanda d’autorizacion"
 
-#: main/src/ui/notifications.vala:152
+#: main/src/ui/notifications.vala:151
 #, c-format
 msgid "%s requests the permission to write in %s"
 msgstr "%s demanda l’autorizacion d’escriure dins %s"
@@ -156,26 +171,26 @@ msgstr "Expulsar"
 
 #: main/src/ui/occupant_menu/view.vala:108
 msgid "Grant write permission"
-msgstr ""
+msgstr "Autorizar l’escritura"
 
 #: main/src/ui/occupant_menu/view.vala:114
 msgid "Revoke write permission"
-msgstr ""
+msgstr "Revocar l’autorizacion d’ecritura"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 msgid "Select file"
 msgstr "Seleccionar fichièr"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 #: main/src/ui/manage_accounts/dialog.vala:152
 msgid "Select"
 msgstr "Seleccionar"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 #: main/src/ui/add_conversation/select_contact_dialog.vala:38
 #: main/src/ui/add_conversation/add_conference_dialog.vala:15
 #: main/src/ui/add_conversation/add_conference_dialog.vala:122
-#: main/src/ui/application.vala:200 main/src/ui/manage_accounts/dialog.vala:152
+#: main/src/ui/application.vala:203 main/src/ui/manage_accounts/dialog.vala:152
 #: main/data/message_item_widget_edit_mode.ui:54
 #: main/data/add_conversation/add_groupchat_dialog.ui:11
 #: main/data/add_conversation/add_contact_dialog.ui:12
@@ -215,7 +230,7 @@ msgid "Start"
 msgstr "Començar"
 
 #: main/src/ui/add_conversation/add_conference_dialog.vala:26
-#: main/src/ui/application.vala:200 main/data/menu_add.ui:13
+#: main/src/ui/application.vala:203 main/data/menu_add.ui:13
 #: main/data/shortcuts.ui:24
 msgid "Join Channel"
 msgstr "Rejónher una sala"
@@ -231,7 +246,7 @@ msgstr "Seguent"
 #: main/src/ui/add_conversation/add_conference_dialog.vala:66
 #: main/src/ui/add_conversation/add_conference_dialog.vala:142
 #: main/src/ui/add_conversation/conference_details_fragment.vala:157
-#: main/src/ui/application.vala:200
+#: main/src/ui/application.vala:203
 msgid "Join"
 msgstr "Rejónher"
 
@@ -286,19 +301,19 @@ msgstr "L’adreça es invalida"
 msgid "Add"
 msgstr "Ajustar"
 
-#: main/src/ui/global_search.vala:140
+#: main/src/ui/global_search.vala:141
 #, c-format
 msgid "%i search result"
 msgid_plural "%i search results"
 msgstr[0] "%i resultat de recèrca"
 msgstr[1] "%i resultats de recèrca"
 
-#: main/src/ui/global_search.vala:167
+#: main/src/ui/global_search.vala:168
 #, c-format
 msgid "In %s"
 msgstr "En %s"
 
-#: main/src/ui/global_search.vala:167
+#: main/src/ui/global_search.vala:168
 #, c-format
 msgid "With %s"
 msgstr "Amb %s"
@@ -352,15 +367,15 @@ msgstr "Per defaut : %s"
 
 #: main/src/ui/contact_details/permissions_provider.vala:23
 msgid "Request"
-msgstr ""
+msgstr "Demandar"
 
 #: main/src/ui/contact_details/permissions_provider.vala:25
 msgid "Permissions"
-msgstr ""
+msgstr "Permissions"
 
 #: main/src/ui/contact_details/permissions_provider.vala:25
 msgid "Request permission to send messages"
-msgstr ""
+msgstr "Demandar la permission d’enviar de messatges"
 
 #: main/src/ui/contact_details/dialog.vala:37
 msgid "Conference Details"
@@ -406,11 +421,11 @@ msgstr "Los ocupants pòdon cambiar lo subjècte"
 
 #: main/src/ui/contact_details/muc_config_form_provider.vala:66
 msgid "Permission to view JIDs"
-msgstr ""
+msgstr "Permission de veire los JID"
 
 #: main/src/ui/contact_details/muc_config_form_provider.vala:67
 msgid "Who is allowed to view the occupants' JIDs?"
-msgstr ""
+msgstr "Qual pòt veire los JID dels participants ?"
 
 #: main/src/ui/contact_details/muc_config_form_provider.vala:70
 #: main/data/add_conversation/conference_details_fragment.ui:175
@@ -422,7 +437,7 @@ msgstr "Senhal"
 
 #: main/src/ui/contact_details/muc_config_form_provider.vala:71
 msgid "A password to restrict access to the room"
-msgstr ""
+msgstr "Un senhal per restrénher l’accès a sala"
 
 #: main/src/ui/contact_details/muc_config_form_provider.vala:74
 msgid "Moderated"
@@ -505,14 +520,6 @@ msgstr "Connectat"
 msgid "Disconnected"
 msgstr "Desconnectat"
 
-#: main/src/ui/manage_accounts/dialog.vala:232
-msgid "Wrong password"
-msgstr "Marrit senhal"
-
-#: main/src/ui/manage_accounts/dialog.vala:234
-msgid "Invalid TLS certificate"
-msgstr "Lo certificat TLS es invalid"
-
 #: main/src/ui/manage_accounts/dialog.vala:237
 #: main/src/ui/manage_accounts/dialog.vala:239
 msgid "Error"
@@ -531,6 +538,27 @@ msgstr "Se connectar a %s"
 #, c-format
 msgid "You can now use the account %s."
 msgstr "Ara podètz utilizar lo compte %s."
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:245
+#, c-format
+msgid "The server could not prove that it is %s."
+msgstr ""
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:247
+msgid "Its security certificate is not trusted by your operating system."
+msgstr ""
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:249
+msgid "Its security certificate is issued to another domain."
+msgstr ""
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:251
+msgid "Its security certificate will only become valid in the future."
+msgstr ""
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:253
+msgid "Its security certificate is expired."
+msgstr ""
 
 #: main/src/ui/manage_accounts/add_account_dialog.vala:278
 msgid "Wrong username or password"
@@ -566,18 +594,18 @@ msgstr "Se marcar"
 msgid "Check %s for information on how to sign up"
 msgstr "Consultatz %s per mai d’informacions tocant cossí se marchar"
 
-#: main/src/ui/conversation_content_view/message_widget.vala:157
+#: main/src/ui/conversation_content_view/message_widget.vala:158
 msgid "Message too long"
 msgstr "Lo messatge es tròp long"
 
-#: main/src/ui/conversation_content_view/message_widget.vala:185
+#: main/src/ui/conversation_content_view/message_widget.vala:186
 msgid "edited"
 msgstr "modificat"
 
 #: main/src/ui/conversation_content_view/chat_state_populator.vala:110
-#, fuzzy, c-format
+#, c-format
 msgid "%s, %s and %i others are typing…"
-msgstr "%s, %s e %i son a escriure"
+msgstr "%s, %s e %i son a escriure…"
 
 #: main/src/ui/conversation_content_view/chat_state_populator.vala:112
 #, c-format
@@ -675,7 +703,7 @@ msgstr "Enviar un fichièr"
 
 #: main/data/message_item_widget_edit_mode.ui:60
 msgid "Update message"
-msgstr ""
+msgstr "Actualizar lo messatge"
 
 #: main/data/unified_main_content.ui:48
 msgid "Click here to start a conversation or join a channel."
@@ -771,7 +799,7 @@ msgstr "General"
 
 #: main/data/shortcuts.ui:32
 msgid "Conversation"
-msgstr ""
+msgstr "Discussion"
 
 #: main/data/shortcuts.ui:52
 msgid "Navigation"

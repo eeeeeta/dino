@@ -55,12 +55,11 @@ public class Notifications : Object {
         string text = "";
         switch (content_item.type_) {
             case MessageItem.TYPE:
-                Message message = (content_item as MessageItem).message;
+                Message message = ((MessageItem) content_item).message;
                 text = message.body;
                 break;
             case FileItem.TYPE:
-                FileItem file_item = content_item as FileItem;
-                FileTransfer transfer = file_item.file_transfer;
+                FileTransfer transfer = ((FileItem) content_item).file_transfer;
 
                 bool file_is_image = transfer.mime_type != null && transfer.mime_type.has_prefix("image");
                 if (transfer.direction == Message.DIRECTION_SENT) {
@@ -113,10 +112,10 @@ public class Notifications : Object {
         Notification notification = new Notification(_("Could not connect to %s").printf(account.bare_jid.domainpart));
         switch (error.source) {
             case ConnectionManager.ConnectionError.Source.SASL:
-                notification.set_body("Wrong password");
+                notification.set_body(_("Wrong password"));
                 break;
             case ConnectionManager.ConnectionError.Source.TLS:
-                notification.set_body("Invalid TLS certificate");
+                notification.set_body(_("Invalid TLS certificate"));
                 break;
         }
         GLib.Application.get_default().send_notification(account.id.to_string() + "-connection-error", notification);
@@ -142,7 +141,7 @@ public class Notifications : Object {
         GLib.Application.get_default().send_notification(null, notification);
     }
     
-    private async void on_voice_request_received(Account account, Jid room_jid, Jid from_jid, string? nick, string? role, string? label) {
+    private async void on_voice_request_received(Account account, Jid room_jid, Jid from_jid, string nick) {
         Conversation? conversation = stream_interactor.get_module(ConversationManager.IDENTITY).get_conversation(room_jid, account, Conversation.Type.GROUPCHAT);
         if (conversation == null) return;
 
@@ -157,9 +156,10 @@ public class Notifications : Object {
             notification.set_icon(get_pixbuf_icon(jid_avatar));
         } catch (Error e) { }
 
-        notification.set_default_action_and_target_value("app.accept-voice-request", new Variant.int32(conversation.id));
+        Variant variant = new Variant.tuple(new Variant[] {new Variant.int32(conversation.id), new Variant.string(nick)});
+        notification.set_default_action_and_target_value("app.accept-voice-request", variant);
         notification.add_button_with_target_value(_("Deny"), "app.deny-voice-request", conversation.id);
-        notification.add_button_with_target_value(_("Accept"), "app.accept-voice-request", conversation.id);
+        notification.add_button_with_target_value(_("Accept"), "app.accept-voice-request", variant);
         GLib.Application.get_default().send_notification(null, notification);
     }
 

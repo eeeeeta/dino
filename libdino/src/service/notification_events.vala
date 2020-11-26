@@ -13,7 +13,7 @@ public class NotificationEvents : StreamInteractionModule, Object {
     public signal void notify_subscription_request(Conversation conversation);
     public signal void notify_connection_error(Account account, ConnectionManager.ConnectionError error);
     public signal void notify_muc_invite(Account account, Jid room_jid, Jid from_jid, string? password, string? reason);
-    public signal void notify_voice_request(Account account, Jid room_jid, Jid from_jid, string? nick, string? role, string? label);
+    public signal void notify_voice_request(Account account, Jid room_jid, Jid from_jid, string nick);
 
     private StreamInteractor stream_interactor;
 
@@ -28,7 +28,7 @@ public class NotificationEvents : StreamInteractionModule, Object {
         stream_interactor.get_module(ContentItemStore.IDENTITY).new_item.connect(on_content_item_received);
         stream_interactor.get_module(PresenceManager.IDENTITY).received_subscription_request.connect(on_received_subscription_request);
         stream_interactor.get_module(MucManager.IDENTITY).invite_received.connect((account, room_jid, from_jid, password, reason) => notify_muc_invite(account, room_jid, from_jid, password, reason));
-        stream_interactor.get_module(MucManager.IDENTITY).voice_request_received.connect((account, room_jid, from_jid, nick, role, label) => notify_voice_request(account, room_jid, from_jid, nick, role, label));
+        stream_interactor.get_module(MucManager.IDENTITY).voice_request_received.connect((account, room_jid, from_jid, nick) => notify_voice_request(account, room_jid, from_jid, nick));
         stream_interactor.connection_manager.connection_error.connect((account, error) => notify_connection_error(account, error));
     }
 
@@ -49,11 +49,11 @@ public class NotificationEvents : StreamInteractionModule, Object {
 
         switch (content_item.type_) {
             case MessageItem.TYPE:
-                Message message = (content_item as MessageItem).message;
+                Message message = ((MessageItem) content_item).message;
                 if (message.direction == Message.DIRECTION_SENT) return false;
                 break;
             case FileItem.TYPE:
-                FileTransfer file_transfer = (content_item as FileItem).file_transfer;
+                FileTransfer file_transfer = ((FileItem) content_item).file_transfer;
                 // Don't notify on file transfers in a groupchat set to "mention only"
                 if (notify == Conversation.NotifySetting.HIGHLIGHT) return false;
                 if (file_transfer.direction == FileTransfer.DIRECTION_SENT) return false;
@@ -64,7 +64,7 @@ public class NotificationEvents : StreamInteractionModule, Object {
             Jid? nick = stream_interactor.get_module(MucManager.IDENTITY).get_own_jid(conversation.counterpart, conversation.account);
             if (nick == null) return false;
 
-            Entities.Message message = (content_item as MessageItem).message;
+            Entities.Message message = ((MessageItem) content_item).message;
             return Regex.match_simple("\\b" + Regex.escape_string(nick.resourcepart) + "\\b", message.body, RegexCompileFlags.CASELESS);
         }
         return true;

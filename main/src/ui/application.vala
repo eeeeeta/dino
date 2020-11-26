@@ -138,11 +138,14 @@ public class Dino.Ui.Application : Gtk.Application, Dino.Application {
         });
         add_action(accept_muc_invite_action);
 
-        SimpleAction accept_voice_request_action = new SimpleAction("accept-voice-request", VariantType.INT32);
+        SimpleAction accept_voice_request_action = new SimpleAction("accept-voice-request", new VariantType.tuple(new VariantType[]{VariantType.INT32, VariantType.STRING}));
         accept_voice_request_action.activate.connect((variant) => {
-            Conversation? conversation = stream_interactor.get_module(ConversationManager.IDENTITY).get_conversation_by_id(variant.get_int32());
+            int conversation_id = variant.get_child_value(0).get_int32();
+            Conversation? conversation = stream_interactor.get_module(ConversationManager.IDENTITY).get_conversation_by_id(conversation_id);
             if (conversation == null) return;
-            stream_interactor.get_module(MucManager.IDENTITY).change_role(conversation.account, conversation.counterpart, conversation.nickname, "participant");
+
+            string nick = variant.get_child_value(1).get_string();
+            stream_interactor.get_module(MucManager.IDENTITY).change_role(conversation.account, conversation.counterpart, nick, "participant");
         });
         add_action(accept_voice_request_action);
 
@@ -185,10 +188,16 @@ public class Dino.Ui.Application : Gtk.Application, Dino.Application {
     }
 
     private void show_about_window() {
+        string? version = Dino.VERSION.strip().length == 0 ? null : Dino.VERSION;
+        if (version != null && !version.contains("git")) {
+            switch (version.substring(0, 3)) {
+                case "0.2": version = @"$version - <span font_style='italic'>Mexican Caribbean Coral Reefs</span>"; break;
+            }
+        }
         show_about_dialog(get_active_window(),
                     logo_icon_name: "im.dino.Dino",
                     program_name: "Dino",
-                    version: Dino.VERSION.strip().length == 0 ? null : Dino.VERSION,
+                    version: version,
                     comments: "Dino. Communicating happiness.",
                     website: "https://dino.im/",
                     website_label: "dino.im",

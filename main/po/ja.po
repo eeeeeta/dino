@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-10 20:10+0200\n"
-"PO-Revision-Date: 2020-05-19 21:41+0000\n"
+"POT-Creation-Date: 2020-11-12 18:24+0100\n"
+"PO-Revision-Date: 2020-11-12 05:28+0000\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/dino/"
 "translations/ja/>\n"
 "Language: ja\n"
@@ -16,66 +16,80 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
-#: main/src/ui/notifications.vala:67
+#: main/src/ui/file_send_overlay.vala:85
+msgid "The file exceeds the server's maximum upload size."
+msgstr "ファイルサイズがサーバーの最大アップロード可能サイズを超過しています。"
+
+#: main/src/ui/notifications.vala:66
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:196
 msgid "Image sent"
 msgstr "画像を送信しました"
 
-#: main/src/ui/notifications.vala:67
+#: main/src/ui/notifications.vala:66
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:196
 msgid "File sent"
 msgstr "ファイルを送信しました"
 
-#: main/src/ui/notifications.vala:69
+#: main/src/ui/notifications.vala:68
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:198
 msgid "Image received"
 msgstr "画像を受信しました"
 
-#: main/src/ui/notifications.vala:69
+#: main/src/ui/notifications.vala:68
 #: main/src/ui/conversation_selector/conversation_selector_row.vala:198
 msgid "File received"
 msgstr "ファイルを受信しました"
 
-#: main/src/ui/notifications.vala:99
+#: main/src/ui/notifications.vala:98
 msgid "Subscription request"
 msgstr "在席通知の申込"
 
-#: main/src/ui/notifications.vala:106 main/src/ui/notifications.vala:141
+#: main/src/ui/notifications.vala:105 main/src/ui/notifications.vala:140
 #: main/src/ui/notifications.vala:162
 #: main/src/ui/conversation_content_view/subscription_notification.vala:37
 msgid "Accept"
 msgstr "承諾"
 
-#: main/src/ui/notifications.vala:107 main/src/ui/notifications.vala:140
+#: main/src/ui/notifications.vala:106 main/src/ui/notifications.vala:139
 #: main/src/ui/notifications.vala:161
 #: main/src/ui/conversation_content_view/subscription_notification.vala:38
 msgid "Deny"
 msgstr "拒否"
 
-#: main/src/ui/notifications.vala:113
+#: main/src/ui/notifications.vala:112
 #: main/src/ui/add_conversation/conference_details_fragment.vala:189
 #: main/src/ui/manage_accounts/add_account_dialog.vala:258
 #, c-format
 msgid "Could not connect to %s"
 msgstr "%s に接続できませんでした"
 
-#: main/src/ui/notifications.vala:129
+#: main/src/ui/notifications.vala:115
+#: main/src/ui/manage_accounts/dialog.vala:232
+msgid "Wrong password"
+msgstr "パスワードが違います"
+
+#: main/src/ui/notifications.vala:118
+#: main/src/ui/manage_accounts/dialog.vala:234
+msgid "Invalid TLS certificate"
+msgstr "TLS 証明書が不正です"
+
+#: main/src/ui/notifications.vala:128
 #, c-format
 msgid "Invitation to %s"
 msgstr "%s への招待"
 
-#: main/src/ui/notifications.vala:130
+#: main/src/ui/notifications.vala:129
 #, c-format
 msgid "%s invited you to %s"
 msgstr "%s さんがあなたを %s に招待しました"
 
-#: main/src/ui/notifications.vala:151
+#: main/src/ui/notifications.vala:150
 msgid "Permission request"
 msgstr "送信権限の要求"
 
-#: main/src/ui/notifications.vala:152
+#: main/src/ui/notifications.vala:151
 #, c-format
 msgid "%s requests the permission to write in %s"
 msgstr "%s さんが %s での送信権限を要求しています"
@@ -162,20 +176,20 @@ msgstr "送信権限を許可"
 msgid "Revoke write permission"
 msgstr "送信権限を取り消す"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 msgid "Select file"
 msgstr "ファイルを選択"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 #: main/src/ui/manage_accounts/dialog.vala:152
 msgid "Select"
 msgstr "選択"
 
-#: main/src/ui/conversation_view_controller.vala:205
+#: main/src/ui/conversation_view_controller.vala:213
 #: main/src/ui/add_conversation/select_contact_dialog.vala:38
 #: main/src/ui/add_conversation/add_conference_dialog.vala:15
 #: main/src/ui/add_conversation/add_conference_dialog.vala:122
-#: main/src/ui/application.vala:200 main/src/ui/manage_accounts/dialog.vala:152
+#: main/src/ui/application.vala:203 main/src/ui/manage_accounts/dialog.vala:152
 #: main/data/message_item_widget_edit_mode.ui:54
 #: main/data/add_conversation/add_groupchat_dialog.ui:11
 #: main/data/add_conversation/add_contact_dialog.ui:12
@@ -215,7 +229,7 @@ msgid "Start"
 msgstr "開始"
 
 #: main/src/ui/add_conversation/add_conference_dialog.vala:26
-#: main/src/ui/application.vala:200 main/data/menu_add.ui:13
+#: main/src/ui/application.vala:203 main/data/menu_add.ui:13
 #: main/data/shortcuts.ui:24
 msgid "Join Channel"
 msgstr "チャンネルに参加"
@@ -231,7 +245,7 @@ msgstr "次へ"
 #: main/src/ui/add_conversation/add_conference_dialog.vala:66
 #: main/src/ui/add_conversation/add_conference_dialog.vala:142
 #: main/src/ui/add_conversation/conference_details_fragment.vala:157
-#: main/src/ui/application.vala:200
+#: main/src/ui/application.vala:203
 msgid "Join"
 msgstr "参加"
 
@@ -286,18 +300,18 @@ msgstr "アドレスが不正です"
 msgid "Add"
 msgstr "追加"
 
-#: main/src/ui/global_search.vala:140
+#: main/src/ui/global_search.vala:141
 #, c-format
 msgid "%i search result"
 msgid_plural "%i search results"
 msgstr[0] "%i 件の検索結果"
 
-#: main/src/ui/global_search.vala:167
+#: main/src/ui/global_search.vala:168
 #, c-format
 msgid "In %s"
 msgstr "%s での検索結果"
 
-#: main/src/ui/global_search.vala:167
+#: main/src/ui/global_search.vala:168
 #, c-format
 msgid "With %s"
 msgstr "%s との会話での検索結果"
@@ -502,14 +516,6 @@ msgstr "接続済み"
 msgid "Disconnected"
 msgstr "切断"
 
-#: main/src/ui/manage_accounts/dialog.vala:232
-msgid "Wrong password"
-msgstr "パスワードが違います"
-
-#: main/src/ui/manage_accounts/dialog.vala:234
-msgid "Invalid TLS certificate"
-msgstr "TLS 証明書が不正です"
-
 #: main/src/ui/manage_accounts/dialog.vala:237
 #: main/src/ui/manage_accounts/dialog.vala:239
 msgid "Error"
@@ -528,6 +534,28 @@ msgstr "%s にサインイン"
 #, c-format
 msgid "You can now use the account %s."
 msgstr "アカウント %s を使用できるようになりました。"
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:245
+#, c-format
+msgid "The server could not prove that it is %s."
+msgstr "サーバーはこれが %s だと証明できませんでした。"
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:247
+msgid "Its security certificate is not trusted by your operating system."
+msgstr ""
+"このセキュリティー証明書はオペレーティングシステムに信頼されていません。"
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:249
+msgid "Its security certificate is issued to another domain."
+msgstr "このセキュリティー証明書はほかのドメインのために発行されています。"
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:251
+msgid "Its security certificate will only become valid in the future."
+msgstr "このセキュリティー証明書が有効になる日時になっていません。"
+
+#: main/src/ui/manage_accounts/add_account_dialog.vala:253
+msgid "Its security certificate is expired."
+msgstr "このセキュリティー証明書は有効期限切れです。"
 
 #: main/src/ui/manage_accounts/add_account_dialog.vala:278
 msgid "Wrong username or password"
@@ -563,18 +591,18 @@ msgstr "登録"
 msgid "Check %s for information on how to sign up"
 msgstr "サインアップの方法に関する情報は、%s をご確認ください"
 
-#: main/src/ui/conversation_content_view/message_widget.vala:157
+#: main/src/ui/conversation_content_view/message_widget.vala:158
 msgid "Message too long"
 msgstr "メッセージが長すぎます"
 
-#: main/src/ui/conversation_content_view/message_widget.vala:185
+#: main/src/ui/conversation_content_view/message_widget.vala:186
 msgid "edited"
 msgstr "編集済み"
 
 #: main/src/ui/conversation_content_view/chat_state_populator.vala:110
-#, fuzzy, c-format
+#, c-format
 msgid "%s, %s and %i others are typing…"
-msgstr "%s さん、%s さんに加えて、%i 人のメンバーが入力しています"
+msgstr "%s さん、%s さんに加えて、%i 人のメンバーが入力しています…"
 
 #: main/src/ui/conversation_content_view/chat_state_populator.vala:112
 #, c-format
@@ -768,7 +796,7 @@ msgstr "一般"
 
 #: main/data/shortcuts.ui:32
 msgid "Conversation"
-msgstr ""
+msgstr "トーク"
 
 #: main/data/shortcuts.ui:52
 msgid "Navigation"
