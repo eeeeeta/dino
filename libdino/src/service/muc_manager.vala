@@ -55,6 +55,7 @@ public class MucManager : StreamInteractionModule, Object {
     public async Muc.JoinResult? join(Account account, Jid jid, string? nick, string? password) {
         XmppStream? stream = stream_interactor.get_stream(account);
         if (stream == null) return null;
+	warning("join(" + jid.to_string() + ")");
 
         string nick_ = (nick ?? account.localpart) ?? account.domainpart;
 
@@ -88,15 +89,18 @@ public class MucManager : StreamInteractionModule, Object {
             Conversation joined_conversation = stream_interactor.get_module(ConversationManager.IDENTITY).create_conversation(jid, account, Conversation.Type.GROUPCHAT);
             joined_conversation.nickname = nick;
             stream_interactor.get_module(ConversationManager.IDENTITY).start_conversation(joined_conversation);
+	    warning("join done: " + jid.to_string());
         } else if (res.muc_error != null) {
             // Join failed
             enter_errors[jid] = res.muc_error;
+	    warning("join failed " + jid.to_string() + ": " + res.muc_error.to_string());
         }
 
         return res;
     }
 
     public void part(Account account, Jid jid) {
+	warning("part(" + jid.to_string() + ")");
         mucs_todo[account].remove(jid);
 
         XmppStream? stream = stream_interactor.get_stream(account);
@@ -262,6 +266,7 @@ public class MucManager : StreamInteractionModule, Object {
     public void add_bookmark(Account account, Conference conference) {
         XmppStream? stream = stream_interactor.get_stream(account);
         if (stream != null) {
+	    warning("add bookmark: " + conference.jid.to_string());
             bookmarks_provider[account].add_conference.begin(stream, conference);
         }
     }
@@ -269,6 +274,7 @@ public class MucManager : StreamInteractionModule, Object {
     public void remove_bookmark(Account account, Conference conference) {
         XmppStream? stream = stream_interactor.get_stream(account);
         if (stream != null) {
+	    warning("remove bookmark: " + conference.jid.to_string());
             bookmarks_provider[account].remove_conference.begin(stream, conference);
         }
     }
@@ -386,7 +392,9 @@ public class MucManager : StreamInteractionModule, Object {
             bookmarks_updated(account, conferences);
         });
         bookmarks_provider[account].conference_added.connect( (stream, conference) => {
+            if (conference.autojoin) {
             join.begin(account, conference.jid, conference.nick, conference.password);
+            }
             conference_added(account, conference);
         });
         bookmarks_provider[account].conference_removed.connect( (stream, jid) => {

@@ -324,6 +324,7 @@ public class MessageProcessor : StreamInteractionModule, Object {
         return false;
     }
 
+    // Entrypoint for messages being received.
     private async void on_message_received(Account account, Xmpp.MessageStanza message_stanza) {
         Entities.Message message = yield parse_message_stanza(account, message_stanza);
 

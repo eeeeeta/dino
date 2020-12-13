@@ -30,12 +30,14 @@ public class Module : BookmarksProvider, XmppStreamModule {
         foreach (var conference in hm.values) {
             ret.add(conference);
         }
+        warning("loaded " + ret.size.to_string() + " conferences from bookmarks2");
         return ret;
     }
 
     public async void add_conference(XmppStream stream, Conference conference) {
         StanzaNode conference_node = new StanzaNode.build("conference", NS_URI).add_self_xmlns()
             .put_attribute("autojoin", conference.autojoin ? "true" : "false");
+	warning("add conference: " + conference.jid.to_string());
         if (conference.name != null) {
             conference_node.put_attribute("name", conference.name);
         }
@@ -72,6 +74,7 @@ public class Module : BookmarksProvider, XmppStreamModule {
             flag.conferences[conference.jid] = conference;
             flag.extension_elements[conference.jid] = node.get_subnode("extensions", null, false);
         }
+        warning("got bookmarks2 conference added: " + conference.jid.to_string() + " autojoin " + conference.autojoin.to_string());
         conference_added(stream, conference);
     }
 
@@ -83,6 +86,7 @@ public class Module : BookmarksProvider, XmppStreamModule {
                 flag.conferences.unset(jid_parsed);
                 flag.extension_elements.unset(jid_parsed);
             }
+            warning("got bookmarks2 conference removed: " + id);
             conference_removed(stream, jid_parsed);
         } catch (InvalidJidError e) {
             warning("Ignoring conference bookmark update with invalid Jid: %s", e.message);
