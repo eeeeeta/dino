@@ -24,6 +24,7 @@ namespace Dino.Ui {
 		public SyncDialog(StreamInteractor stream_interactor) {
 			Object(use_header_bar : Util.use_csd() ? 1 : 0);
 			this.width_request = 400;
+			this.deletable = false;
 			this.height_request = 400;
 			this.title = _("Archive Synchronization");
 			this.stream_interactor = stream_interactor;
@@ -88,12 +89,6 @@ namespace Dino.Ui {
 		public void on_mam_start(Account account, string jid, string query_id) {
 			int inflight = stream_interactor.get_module(MamManager.IDENTITY).num_inflight();
 			set_remaining(inflight);
-			if (!visible) {
-				show_all();
-				stop_button.set_visible(stop_button.sensitive);
-				spinner.start();
-				present();
-			}
 			query_ids[query_id] = jid;
 			Label status = new Label("Syncing...");
 			status.xalign = (float) 0.0;
@@ -125,6 +120,12 @@ namespace Dino.Ui {
 
 		public void on_mam_time(Account account, string query_id, DateTime time) {
 			update_query_id(query_id, time);
+			if (!visible) {
+				show_all();
+				stop_button.set_visible(stop_button.sensitive);
+				spinner.start();
+				present();
+			}
 		}
 	}
 }
