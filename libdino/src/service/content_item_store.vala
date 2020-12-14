@@ -179,7 +179,6 @@ public class ContentItemStore : StreamInteractionModule, Object {
     }
 
     private void announce_message(Message message, Conversation conversation) {
-        if (message.from_mam) return; 
         QueryBuilder select = db.content_item.select();
         select.with(db.content_item.foreign_id, "=", message.id);
         select.with(db.content_item.content_type, "=", 1);

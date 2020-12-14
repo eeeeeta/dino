@@ -259,7 +259,7 @@ public class MessageProcessor : StreamInteractionModule, Object {
                 bool duplicate = builder.count() > 0;
                 if (duplicate) return true;
                 // don't need to check other expensive dedup things because it's MAM
-                if (message.from_mam) return false;
+                //if (message.from_mam) return false;
             }
 
             // Deduplicate messages by uuid

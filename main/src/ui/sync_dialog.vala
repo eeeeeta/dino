@@ -23,15 +23,19 @@ namespace Dino.Ui {
 
 		public SyncDialog(StreamInteractor stream_interactor) {
 			Object(use_header_bar : Util.use_csd() ? 1 : 0);
+			this.width_request = 400;
+			this.height_request = 400;
 			this.title = _("Archive Synchronization");
 			this.stream_interactor = stream_interactor;
 			this.superbox = new Box(Orientation.VERTICAL, 5);
 			this.box = new Box(Orientation.HORIZONTAL, 5);
+			this.superbox.margin = 10;
 			this.spinner = new Spinner();
 			this.spinner.margin_top = 10;
 			this.spinner.margin_bottom = 10;
 			this.stop_button = new Button.with_label("Skip syncing this chat");
 			this.stop_button.sensitive = false;
+			this.stop_button.visible = false;
 			this.label = new Label("Please wait");
 			this.label.margin_top = 10;
 			this.label.margin_bottom = 10;
@@ -42,7 +46,9 @@ namespace Dino.Ui {
 			this.box.pack_start(this.label, true, true);
 			this.superbox.pack_start(this.box, false, false);
 			Label description = new Label("blah");
-			description.set_markup("Downloading messages you missed...\nThis might take a while.\n<small>Click a chat &amp; press button to skip.</small>");
+			description.set_markup("Downloading messages you missed...\nThis might take a while.\n<small>Click a chat to skip.</small>");
+			description.margin_top = 5;
+			description.margin_bottom = 5;
 			this.superbox.pack_start(description, false, false);
 			this.sw.max_content_height = 600;
 			this.sw.min_content_height = 100;
@@ -54,6 +60,7 @@ namespace Dino.Ui {
 
 			this.syncing.row_selected.connect((row) => {
 					stop_button.set_sensitive(row != null);
+					stop_button.set_visible(row != null);
 				});
 			this.stop_button.clicked.connect(() => {
 					ListBoxRow lbr = this.syncing.get_selected_row();
@@ -74,7 +81,7 @@ namespace Dino.Ui {
 				status.set_markup(jid + "\n<small><i>→ " + text + "</i></small>");
 			}
 			else {
-				status.set_markup("<span foreground=\"gray\" size=\"small\">" + jid + "</small>");
+				status.set_markup("<span foreground=\"gray\" size=\"small\">" + jid + "</span>");
 			}
 		}
 
@@ -83,6 +90,7 @@ namespace Dino.Ui {
 			set_remaining(inflight);
 			if (!visible) {
 				show_all();
+				stop_button.set_visible(stop_button.sensitive);
 				spinner.start();
 				present();
 			}
