@@ -111,6 +111,7 @@ SOURCES
     src/ui/settings_dialog.vala
     src/ui/main_window.vala
     src/ui/main_window_controller.vala
+    src/ui/sync_dialog.vala
 
     src/ui/add_conversation/add_conference_dialog.vala
     src/ui/add_conversation/add_contact_dialog.vala

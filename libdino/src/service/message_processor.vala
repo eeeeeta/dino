@@ -41,7 +41,7 @@ public class MessageProcessor : StreamInteractionModule, Object {
         received_pipeline.connect(new FilterMessageListener());
         received_pipeline.connect(new StoreMessageListener(stream_interactor));
         received_pipeline.connect(new StoreContentItemListener(stream_interactor));
-        received_pipeline.connect(new MamMessageListener(stream_interactor));
+        //received_pipeline.connect(new MamMessageListener(stream_interactor));
 
         stream_interactor.account_added.connect(on_account_added);
 
@@ -119,7 +119,7 @@ public class MessageProcessor : StreamInteractionModule, Object {
             current_catchup_id.unset(account);
             stream_bak = stream;
             debug("MAM: [%s] MAM available", account.bare_jid.to_string());
-            do_mam_catchup.begin(account);
+            //do_mam_catchup.begin(account);
         });
 
         stream_interactor.module_manager.get_module(account, Xmpp.MessageModule.IDENTITY).received_message_unprocessed.connect((stream, message) => {
@@ -383,6 +383,7 @@ public class MessageProcessor : StreamInteractionModule, Object {
         EntityInfo entity_info = stream_interactor.get_module(EntityInfo.IDENTITY);
         if (mam_message_flag != null && mam_flag != null && mam_flag.ns_ver == Xep.MessageArchiveManagement.NS_URI_2 && mam_message_flag.mam_id != null) {
             new_message.server_id = mam_message_flag.mam_id;
+	    new_message.from_mam = true;
         } else if (message.type_ == Xmpp.MessageStanza.TYPE_GROUPCHAT) {
             bool server_supports_sid = (yield entity_info.has_feature(account, new_message.counterpart.bare_jid, Xep.UniqueStableStanzaIDs.NS_URI)) ||
                     (yield entity_info.has_feature(account, new_message.counterpart.bare_jid, Xep.MessageArchiveManagement.NS_URI_2));
@@ -468,15 +469,9 @@ public class MessageProcessor : StreamInteractionModule, Object {
                         .with(db.message.counterpart_id, "=", db.get_jid_id(message.counterpart))
                         .with(db.message.account_id, "=", account.id);
                 bool duplicate = builder.count() > 0;
-
-                if (duplicate && mam_flag != null) {
-                    debug(@"MAM: [%s] Hitted range duplicate server id. id %s qid %s", account.bare_jid.to_string(), message.server_id, mam_flag.query_id);
-                    if (outer.catchup_until_time.has_key(account) && mam_flag.server_time.compare(outer.catchup_until_time[account]) < 0) {
-                        outer.hitted_range[mam_flag.query_id] = -1;
-                        debug(@"MAM: [%s] In range (time) %s < %s", account.bare_jid.to_string(), mam_flag.server_time.to_string(), outer.catchup_until_time[account].to_string());
-                    }
-                }
                 if (duplicate) return true;
+                // don't need to check other expensive dedup things because it's MAM
+                if (message.from_mam) return false;
             }
 
             // Deduplicate messages by uuid
@@ -505,7 +500,6 @@ public class MessageProcessor : StreamInteractionModule, Object {
                 if (duplicate && mam_flag != null && row_opt[db.message.server_id] == null &&
                         outer.catchup_until_time.has_key(account) && mam_flag.server_time.compare(outer.catchup_until_time[account]) > 0) {
                     outer.hitted_range[mam_flag.query_id] = -1;
-                    debug(@"MAM: [%s] Hitted range duplicate message id. id %s qid %s", account.bare_jid.to_string(), message.stanza_id, mam_flag.query_id);
                 }
                 return duplicate;
             }

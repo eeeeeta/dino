@@ -30,6 +30,12 @@ public class Database {
         }
         this.tables = tables;
         if (debug) db.trace((message) => print(@"Qlite trace: $message\n"));
+	db.profile((sql, nanos) => {
+  uint64 ms = nanos / (uint64) 1000000;
+  if (ms > 5) {
+  print("[sqlite %llums] %s\n", ms, sql);
+  }
+  });
         start_migration();
     }
 

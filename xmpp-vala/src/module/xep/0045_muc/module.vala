@@ -90,11 +90,9 @@ public class Module : XmppStreamModule {
             if (password != null) {
                 x_node.put_node(new StanzaNode.build("password", NS_URI).put_node(new StanzaNode.text(password)));
             }
-            if (history_since != null) {
-                StanzaNode history_node = new StanzaNode.build("history", NS_URI);
-                history_node.set_attribute("since", DateTimeProfiles.to_datetime(history_since));
-                x_node.put_node(history_node);
-            }
+            StanzaNode history_node = new StanzaNode.build("history", NS_URI);
+            history_node.set_attribute("maxstanzas", "0");
+            x_node.put_node(history_node);
             presence.stanza.put_node(x_node);
 
             stream.get_flag(Flag.IDENTITY).start_muc_enter(bare_jid, presence.id);

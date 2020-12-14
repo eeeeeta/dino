@@ -60,6 +60,7 @@ public class Message : Object {
         }
     }
     public string? edit_to = null;
+    public bool from_mam = false;
 
     private Database? db;
 

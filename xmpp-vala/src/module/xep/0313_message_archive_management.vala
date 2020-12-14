@@ -15,7 +15,7 @@ public class Module : XmppStreamModule {
 
     private ReceivedPipelineListener received_pipeline_listener = new ReceivedPipelineListener();
 
-    private StanzaNode crate_base_query(XmppStream stream, string? jid, string? queryid, DateTime? start, DateTime? end) {
+    public StanzaNode crate_base_query(XmppStream stream, string? jid, string? queryid, DateTime? start, DateTime? end) {
         DataForms.DataForm data_form = new DataForms.DataForm();
         DataForms.DataForm.HiddenField form_type_field = new DataForms.DataForm.HiddenField() { var="FORM_TYPE" };
         form_type_field.set_value_string(NS_VER(stream));
@@ -42,7 +42,7 @@ public class Module : XmppStreamModule {
         return query_node;
     }
 
-    private StanzaNode create_set_rsm_node(string? before_id) {
+    public StanzaNode create_set_rsm_node(string? before_id) {
         var before_node = new StanzaNode.build("before", "http://jabber.org/protocol/rsm");
         if (before_id != null) {
             before_node.put_node(new StanzaNode.text(before_id));
@@ -127,8 +127,8 @@ public class ReceivedPipelineListener : StanzaListener<MessageStanza> {
         if (message_node != null) {
             // MAM messages must come from our server // TODO or a MUC server
             if (!message.from.equals(stream.get_flag(Bind.Flag.IDENTITY).my_jid.bare_jid)) {
-                warning("Received alleged MAM message from %s, ignoring", message.from.to_string());
-                return true;
+		// FIXME FIXME FIXME
+                //return true;
             }
 
             StanzaNode? forward_node = message.stanza.get_deep_subnode(NS_VER(stream) + ":result", "urn:xmpp:forward:0:forwarded", DelayedDelivery.NS_URI + ":delay");
