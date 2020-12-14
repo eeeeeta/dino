@@ -109,9 +109,6 @@ public async void do_mam(Account account, string jid) {
        Iq.Stanza? iq = yield query_archive(stream, query_id, jid, null, start_time, null, null);
        if (iq == null) {
            warning("[MAMv2 query %s] hammed IQ :(", query_id);
-           mam_inflight.unset(query_id);
-       mam_stop(account, jid, query_id);
-           return;
        }
         int queries = 0;
        while (iq != null) {
@@ -129,17 +126,13 @@ public async void do_mam(Account account, string jid) {
                   .value(db.better_mam.archive_jid, jid, true)
                   .value(db.better_mam.time, (long) now.to_unix())
                   .perform();
-                mam_inflight.unset(query_id);
-       mam_stop(account, jid, query_id);
-                return;
+                break;
              }
              string? earliest_id = iq.stanza.get_deep_string_content("urn:xmpp:mam:2:fin", "http://jabber.org/protocol/rsm" + ":set", "first");
              if (earliest_id == null) {
                 warning("[MAMv2 query %s] no earliest id :(", query_id);
                 warning("[MAMv2] malformed MAM stanza: " + iq.stanza.to_string());
-                mam_inflight.unset(query_id);
-       mam_stop(account, jid, query_id);
-                return;
+                break;
              }
              string? count = iq.stanza.get_deep_string_content("urn:xmpp:mam:2:fin", "http://jabber.org/protocol/rsm" + ":set", "count");
              // give dino a breather, proportional to the number of inflight queries
@@ -157,6 +150,9 @@ public async void do_mam(Account account, string jid) {
              // MAM go brrrrrrrrrrrrrrrrrrrrrr
              iq = yield query_archive(stream, query_id, jid, null, start_time, null, earliest_id);
        }
+       mam_inflight.unset(query_id);
+       mam_stop(account, jid, query_id);
+       debug("[MAMv2 query %s] inflight unset; %d queries still running", query_id, mam_inflight.size);
 }
 
 } // public class MamManager
