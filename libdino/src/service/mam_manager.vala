@@ -13,6 +13,7 @@ public class MamManager : StreamInteractionModule, Object {
 
 	public signal void mam_start(Account id, string jid, string query_id);
 	public signal void mam_stop(Account id, string jid, string query_id);
+	public signal void mam_time(Account id, string query_id, DateTime time);
 
 	private StreamInteractor stream_interactor;
 	private HashMap<string, DateTime> mam_times = new HashMap<string, DateTime>();
@@ -36,7 +37,8 @@ public class MamManager : StreamInteractionModule, Object {
 		return this.stanzas_synced;
 	}
 
-	public void mam_cancel(string jid) {
+	public void do_mam_cancel(string jid) {
+		warning("[MAMv2] cancel request received for %s", jid);
 		this.mam_cancel.add(jid);
 	}
 
@@ -64,10 +66,11 @@ public class MamManager : StreamInteractionModule, Object {
 					return;
 				}
 				stanzas_synced += 1;
-				mam_counts[queryid] += 1;
+				mam_counts[queryid] = mam_counts[queryid] + 1;
 				if (time.compare(curtime) < 0) {
 					mam_times[queryid] = time;
 					debug("[MAMv2 query " + queryid + "] got stanza " + id + " at time " + time.to_string());
+					mam_time(account, queryid, time);
 				}
 			});
 	}
@@ -114,7 +117,7 @@ public class MamManager : StreamInteractionModule, Object {
 			warning("[MAMv2 query %s] hammed IQ :(", query_id);
 		}
 		int queries = 0;
-		bool done = false;
+		bool update_db = false;
 		while (iq != null) {
 			string? complete = iq.stanza.get_deep_attribute("urn:xmpp:mam:2:fin", "complete");
 			queries += 1;
@@ -123,12 +126,12 @@ public class MamManager : StreamInteractionModule, Object {
 				if (prev_time == 0) {
 					notify_done(jid, queries.to_string() + " pages; " + mam_times[query_id].to_string());
 				}
-				done = true;
+				update_db = true;
 				break;
 			}
-			if (mam_cancel.get(jid)) {
+			if (mam_cancel.remove(query_id)) {
 				warning("[MAMv2 query %s] cancelled!", query_id);
-				done = true;
+				update_db = true;
 				break;
 			}
 			string? earliest_id = iq.stanza.get_deep_string_content("urn:xmpp:mam:2:fin", "http://jabber.org/protocol/rsm" + ":set", "first");
@@ -139,7 +142,7 @@ public class MamManager : StreamInteractionModule, Object {
 			}
 			string? count = iq.stanza.get_deep_string_content("urn:xmpp:mam:2:fin", "http://jabber.org/protocol/rsm" + ":set", "count");
 			// give dino a breather, proportional to the number of inflight queries
-			int wait_ms = 5 * num_inflight();
+			int wait_ms = 10;
 			Timeout.add(wait_ms, () => { Idle.add(do_mam.callback); return false; });
 			yield;
 			if (count != null) {
@@ -153,7 +156,7 @@ public class MamManager : StreamInteractionModule, Object {
 			// MAM go brrrrrrrrrrrrrrrrrrrrrr
 			iq = yield query_archive(stream, query_id, jid, null, start_time, null, earliest_id);
 		}
-		if (done) {
+		if (update_db) {
 			DateTime now = new DateTime.now_utc();
 			db.better_mam.upsert()
 				.value(db.better_mam.account_id, account.id, true)
