@@ -115,7 +115,7 @@ public class ConversationSelectorRow : ListBoxRow {
         last_content_item = stream_interactor.get_module(ContentItemStore.IDENTITY).get_latest(conversation) ?? ci;
         update_message_label();
         update_time_label();
-        update_read();
+        //update_read();
     }
 
     public async void colapse() {

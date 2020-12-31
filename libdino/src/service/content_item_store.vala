@@ -173,12 +173,24 @@ public class ContentItemStore : StreamInteractionModule, Object {
         filters.add(content_filter);
     }
 
-    public void insert_message(Message message, Conversation conversation, bool hide = false) {
+    public MessageItem insert_message(Message message, Conversation conversation, bool hide = false) {
         MessageItem item = new MessageItem(message, conversation, -1);
         item.id = db.add_content_item(conversation, message.time, message.local_time, 1, message.id, hide);
+        return item;
     }
 
     private void announce_message(Message message, Conversation conversation) {
+        if (message.content_item_id != null) {
+		MessageItem item = new MessageItem(message, conversation, message.content_item_id);
+            if (!discard(item)) {
+                if (collection_conversations.has_key(conversation)) {
+                    collection_conversations.get(conversation).insert_item(item);
+                }
+                new_item(item, conversation);
+            }
+return;
+	
+        }
         QueryBuilder select = db.content_item.select();
         select.with(db.content_item.foreign_id, "=", message.id);
         select.with(db.content_item.content_type, "=", 1);

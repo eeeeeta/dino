@@ -38,6 +38,7 @@ public class ConversationView : Box, Plugins.ConversationItemCollection, Plugins
 
     private Mutex reloading_mutex = Mutex();
     private bool animate = false;
+    private bool inserting_item = false;
     private bool firstLoad = true;
     private bool at_current_content = true;
     private bool reload_messages = true;

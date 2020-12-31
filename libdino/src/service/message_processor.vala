@@ -353,7 +353,7 @@ public class MessageProcessor : StreamInteractionModule, Object {
 
         public override async bool run(Entities.Message message, Xmpp.MessageStanza stanza, Conversation conversation) {
             if (message.body == null) return true;
-            stream_interactor.get_module(ContentItemStore.IDENTITY).insert_message(message, conversation);
+            message.content_item_id = stream_interactor.get_module(ContentItemStore.IDENTITY).insert_message(message, conversation).id;
             return false;
         }
     }
